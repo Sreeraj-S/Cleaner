@@ -33,10 +33,11 @@ class Sorter:
         print("started")
         for f in os.listdir(self.currentDir):
             print(f)
-            try:s
+            try:
                 filename, ext = os.path.splitext(f)
-                print(ext)
-                if os.path.getsize(os.path.join(self.currentDir,f))<100000000 and ext in [".exe",".msi"]:
+                size = os.path.getsize(os.path.join(self.currentDir,f))
+                print(size)
+                if size>600000000 and ext in [".exe",".msi"]:
                     print('in')
                     fileNames.append(f)
             except (PermissionError):
@@ -46,9 +47,11 @@ class Sorter:
 
         try:
             for f in fileNames:
-                os.remove(f)
+                os.remove(os.path.join(self.currentDir,f))
         except PermissionError:
             pass
+    def oldFiles(self):
+        pass
 
 if __name__ == "__main__":
     pass
