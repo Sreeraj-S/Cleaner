@@ -1,6 +1,10 @@
 import os
 import shutil
+from datetime import datetime
+import pathlib
+import pickle
 
+version = 1.03
 current_dir = os.getcwd()
 
 class Sorter:
@@ -30,15 +34,11 @@ class Sorter:
             
     def deleteSetupFiles(self):
         fileNames = []
-        print("started")
         for f in os.listdir(self.currentDir):
-            print(f)
             try:
                 filename, ext = os.path.splitext(f)
                 size = os.path.getsize(os.path.join(self.currentDir,f))
-                print(size)
                 if size>600000000 and ext in [".exe",".msi"]:
-                    print('in')
                     fileNames.append(f)
             except (PermissionError):
                 pass
@@ -50,8 +50,49 @@ class Sorter:
                 os.remove(os.path.join(self.currentDir,f))
         except PermissionError:
             pass
+    
     def oldFiles(self):
-        pass
+        fileNames = []
+        for f in os.listdir(self.currentDir):
+            print(f)
+            #unixTimeStamp = os.path.getmtime(os.path.join(self.currentDir,f))
+            unixTimeStamp = pathlib.Path(os.path.join(self.currentDir,f)).stat().st_mtime
+            print(unixTimeStamp)
+            dateTime = datetime.utcfromtimestamp(unixTimeStamp).strftime('%Y-%m-%d %H:%M:%S')
+            dateTimeNow = datetime.now()
+            print(dateTime,dateTimeNow)
+            
+    def allocateFolder(self, dirAllocate):
+        try:
+            dirAllocate = os.path.join(dirAllocate,"allocated.cleaner")
+            with open(dirAllocate,"wb+") as files:
+                pickle.dump(version,files)
+                return True
+        except FileExistsError as fe:
+            return False
+        except Exception as e:
+            print(e)
+    
+    def trash(self):
+        fileNames = []
+        try:
+            os.mkdir(os.path.join(self.currentDir, "Trash"))
+        except FileExistsError:
+            pass
+        except:
+            print('got an error in creating a folder')
+        
+        for f in os.listdir(self.currentDir):
+            try:
+                filename, ext = os.path.splitext(f)
+                if ext not in ["",".BIN"]:
+                    shutil.move(
+                    os.path.join(self.currentDir, f'{filename}{ext}'),
+                    os.path.join(self.currentDir, "Trash" , f'{filename}{ext}'))
+            except (FileNotFoundError, PermissionError):
+                pass
+            
+            
 
 if __name__ == "__main__":
     pass
