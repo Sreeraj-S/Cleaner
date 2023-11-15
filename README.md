@@ -6,7 +6,7 @@ The Cleaner project is a file management tool designed to clean and organize fil
 
 ## Motivation
 
-This project was born out of a desire to avoid the tedious task of manually organizing files. As someone who dislikes sorting files but needed a solution, the Cleaner was developed as a fun and practical way to address the issue of cluttered storage.
+This project was born out of a desire to avoid the tedious task of manually organizing files. As someone who dislikes sorting files but needs a solution, the Cleaner was developed as a fun and practical way to address the issue of cluttered storage.
 
 ## Features
 
@@ -28,7 +28,8 @@ This project was born out of a desire to avoid the tedious task of manually orga
   - Python (version 3.6 and upper)
 
 - **Running the Cleaner:**
-  - Download the code and install the missing modules using pip
+  - Download the code -> Recommend to use the code from folder [V1.0-Beta](https://github.com/Sreeraj-S/Cleaner/tree/master/V1.0-Beta)
+  - install the missing modules using pip
 
 ## Configuration
 
